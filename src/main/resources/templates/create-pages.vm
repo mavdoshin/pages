@@ -1,0 +1,22 @@
+#*Форма отчета о выполненных действиях*#
+<section role="dialog" id="pages1" class="aui-layer aui-dialog2 aui-dialog2-medium" aria-hidden="true"
+         data-aui-remove-on-hide="true">
+    <form action="$action.getBootstrapManager().getWebAppContextPath()/plugins/pages/CreatePages.action" method="get" class="aui">
+
+        <header class="aui-dialog2-header">
+            <h2 class="aui-dialog2-header-main">$action.getText("create-pages.file") $!action.getfile()</h2>
+            <a class="aui-dialog2-header-close">
+                <span class="aui-icon aui-icon-small aui-iconfont-close-dialog">$action.getText("dialog.close")</span>
+            </a>
+        </header>
+#*Вывод информации о созданных страницах или ошибках*#
+        <div class="aui-dialog2-content" id="diff-page-popup-binder">
+            $action.getText("create-pages.inspace") $!action.getspaces() $action.getText("create-pages.create")
+            #foreach( $inf in $!action.getInf())
+              <br/>$inf
+            #end
+        </div>
+
+    </form>
+
+</section>

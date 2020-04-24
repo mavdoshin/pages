@@ -1,0 +1,57 @@
+<atlassian-plugin key="${atlassian.plugin.key}" name="${project.name}" plugins-version="2">
+    <plugin-info>
+        <description>${project.description}</description>
+        <version>${project.version}</version>
+        <vendor name="${project.organization.name}" url="${project.organization.url}" />
+        <param name="plugin-icon">images/pluginIcon.png</param>
+        <param name="plugin-logo">images/pluginLogo.png</param>
+    </plugin-info>
+
+    <!-- add our i18n resource -->
+    <resource type="i18n" name="i18n" location="pages"/>
+   
+    <!--подключаем ресурсы и зависимости-->
+    <web-resource key="create-pages" name="create-pages">
+        <dependency>com.atlassian.auiplugin:ajs</dependency>
+	<dependency>com.atlassian.auiplugin:dialog2</dependency>
+        <resource type="download" name="create-pages.js" location="/js/create-pages.js"/>
+        <resource type="download" name="read-excel-file.min.js" location="/js/read-excel-file.min.js"/>  
+        <context>confluence.plugins.pages</context>
+    </web-resource>
+
+    <web-resource key="pages-resources" name="pages Web Resources">
+        <dependency>com.atlassian.auiplugin:ajs</dependency>
+	<dependency>com.atlassian.auiplugin:dialog2</dependency>		
+        <resource type="download" name="pages.css" location="/css/pages.css"/>
+        <resource type="download" name="dialog.js" location="/js/dialog.js"/> 
+        <resource type="download" name="images/" location="/images"/>
+        <context>atl.general</context>
+    </web-resource>
+     
+    <!--добавляем пункт меню в интерфейс confluence для запуска плагина-->   
+    <web-item key="pages-menu" name="Pages" section="system.header/right" weight="60">
+        <description key="item.pages.desc">Create new pages</description>
+        <label key="Create new pages"/>
+        <link linkId="pages-menu">/plugins/pages/Dialog.action</link>
+    </web-item>
+	
+    <!--добавляем java-обработчики ссылок и шаблоны страниц-->      
+    <xwork name="Create Pages Action" key="create-pages-action">
+        <description>Dialog Action</description>
+        
+        <package name="dialog-package" extends="default" namespace="/plugins/pages">
+            <default-interceptor-ref name="defaultStack"/>
+            действие 
+            <action name="Dialog"
+                    class="confluence.plugins.pages.action.DialogAction">
+                <result name="success" type="velocity">/templates/dialog.vm</result>
+            </action>
+
+            <action name="CreatePages"
+                    class="confluence.plugins.pages.action.CreatePagesAction">
+                <result name="success" type="velocity">/templates/create-pages.vm</result>
+            </action>
+        </package>
+    </xwork>
+    
+</atlassian-plugin>

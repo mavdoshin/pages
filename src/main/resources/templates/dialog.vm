@@ -1,0 +1,54 @@
+#*Форма запроса параметров (пространство и файл) у пользователя*#
+
+##скрипт парсер xlsx-файла
+<script type="text/javascript" src="$action.getBootstrapManager().getWebAppContextPath()/download/resources/confluence.plugins.pages:create-pages/read-excel-file.min.js" defer></script>
+##скрипт для отображения формы-отчета о созданных страницах
+<script type="text/javascript" src="$action.getBootstrapManager().getWebAppContextPath()/download/resources/confluence.plugins.pages:create-pages/create-pages.js" defer></script>
+
+
+<section role="dialog" id="pages" class="aui-layer aui-dialog2 aui-dialog2-medium" aria-hidden="true"
+         data-aui-remove-on-hide="true">
+    <form id="dialog-form" action="$action.getBootstrapManager().getWebAppContextPath()/plugins/pages/CreatePages.action" method="get" class="aui">
+
+        <header class="aui-dialog2-header">
+            <h2 class="aui-dialog2-header-main">$action.getText("pages.title")</h2>
+            <a class="aui-dialog2-header-close">
+                <span class="aui-icon aui-icon-small aui-iconfont-close-dialog">$action.getText("dialog.close")</span>
+            </a>
+        </header>
+
+        <div class="aui-dialog2-content">
+
+            <div class="field-group">
+                <label for="spaces">$action.getText("dialog.space")</label>
+
+                #*Поле со списком для выбора пространства*#
+                <select class="select" id="spaces" name="spaces" title="Space select">
+                    #foreach( $space in $action.getSpaceKey())
+                        <option>$space.key</option>
+                    #end
+                </select>
+
+            </div>
+
+            #*Поле для выбора файла*#
+            <div class="field-group">
+
+                <label for="file-select">$action.getText("dialog.select.page")</label>
+                <input class="upfile" type="file" accept=".xlsx, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" id="file-select" name="file-select">
+
+            </div>
+
+        </div>
+
+        <footer class="aui-dialog2-footer">
+            <div class="aui-dialog2-footer-actions">
+                <button id="dialog-button" class="aui-button aui-button-primary">$action.getText("dialog.upload")</button>
+            </div>
+            <div class="aui-dialog2-footer-hint">$action.getText("dialog.footer.hint")</div>
+        </footer>
+
+    </form>
+
+</section>
+
